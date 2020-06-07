@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+    
+        .pic {
+            height: 600px;
+            width: 800px;
+            margin: auto;
+            position: relative;
+        }
+        .pic img{
+            height: 600px;
+            width: 800px;
+        }
+        .pic li {
+            position: absolute;
+            display: none;
+        }
+        .pic li:first-child {
+            display: block;
+        }
+        .arrow {
+            display: none;
+        }
+        .pic:hover .arrow {
+            display: block;
+        }
+        .larrow,.rarrow {
+            width: 30px;
+            height: 50px;
+            background-color: black;
+            position: absolute;
+            top: 50%;
+            cursor: pointer;
+            text-align: center;
+            line-height: 50px;
+            color: white;
+            font-size: 25px;
+            z-index: 2;
+        }
+        .larrow{
+            left: 0;
+            border-top-right-radius: 30px;
+            border-bottom-right-radius: 30px;
+        }
+        .rarrow{
+            right: 0;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+        }
+        .larrow:hover,.rarrow:hover {
+            background-color: rgba(5, 5, 5, 0.5);
+        }
+        .but {
+            margin-left: 60px;
+            position: absolute;
+            bottom: 20px;
+            z-index: 2;
+        }
+        .but i {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1px solid white;
+            text-align: center;
+        }
+        .but1 {
+            background: #fff;
+        }
+      </style>
+</head>
+<body>
+    <div class="pic">
+        <!--图片-->
+        <ul>
+            <li><img src="images/1.jpg" alt=""></li>
+            <li><img src="images/2.jpg" alt=""></li>
+            <li><img src="images/3.jpg" alt=""></li>
+            <li><img src="images/4.jpg" alt=""></li>
+            <li><img src="images/5.jpg" alt=""></li>
+            <li><img src="images/6.jpg" alt=""></li>
+            <li><img src="images/7.jpg" alt=""></li>
+            <li><img src="images/8.jpg" alt=""></li>
+        </ul>
+        <!--左右箭头-->
+        <div class="arrow">
+          <span class="larrow">&lt;</span>
+          <span class="rarrow">&gt;</span>
+        </div>
+        <!-- 底部圆点按钮 -->
+        <div class="but">
+          <i class="but1"></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
+    </div>
+    <script src="js/jquery.js"></script>
+</body>
+<script>
+    $(document).ready(function () {
+        var index = 0;
+        var lis = $('.pic li');
+        $('.rarrow').click(right);
+        function right() {
+            index++; 
+            if (index == lis.length) {
+                index = 0;
+            }
+            lis.eq(index).fadeIn().siblings().fadeOut();
+            $('.but i').eq(index).addClass('but1').siblings().removeClass('but1');
+        }
+        $('.larrow').click(function () {
+            index--;
+            if (index < 0) {
+                index = lis.length - 1;
+            }
+            lis.eq(index).fadeIn().siblings().fadeOut();
+            $('.but i').eq(index).addClass('but1').siblings().removeClass('but1');
+      })
+      btns = $('.but i');
+      for (var i = 0; i < btns.length; i++) {
+            btns.eq(i).attr('index', i);
+            btns.eq(i).mouseenter(fn);
+      }
+      function fn() {
+            var index = $(this).attr('index');
+            lis.eq(index).fadeIn().siblings().fadeOut();
+            $(this).addClass('but1').siblings().removeClass('but1');
+      }
+      var timeid = setInterval(function () {
+            right()
+      }, 3000)
+      $('.pic').mouseleave(function () {
+            timeid = setInterval(function () {
+            right()
+        }, 3000)
+      })
+      $('.pic').mouseenter(function(){
+            clearInterval(timeid)
+      })
+    })
+</script>
+
+</html>
